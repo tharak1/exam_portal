@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QuestionForm from '../../components/QuestionForm';
-import SideBarForAdmin from '../../components/SideBarForAdmin';
+import SideBarForAdmin from '../../components/SideBarForAdminExams';
 
 const CreateQuestionPaper: React.FC = () => {
   const[points,setPoints] = useState<number>(0);
