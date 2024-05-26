@@ -25,9 +25,16 @@ const AdminDashboard:React.FC = () => {
             <StatsCard name= {"courses sold"} count = {20}/>
             <StatsCard name= {"Pending payments"} count = {20}/>
             <StatsCard name= {"Total courses"} count = {20}/>
+            <StatsCard name= {"Total Visits"} count = {20}/>
+            <StatsCard name= {"Total Feedbacks"} count = {20}/>
+            <StatsCard name= {"Total Employees"} count = {20}/>
+            <StatsCard name= {"Total Branches"} count = {20}/>
 
 
-            <div className="bg-white shadow sm:rounded-lg dark:bg-gray-800 col-span-8 row-start-4 row-span-6 overflow-auto scrollbar-rounded">
+
+
+
+            <div className="bg-white shadow sm:rounded-lg dark:bg-gray-800 col-span-8 row-start-6 row-span-6 overflow-auto scrollbar-rounded">
                 <h1 className="mt-4 ml-4">Sales Last 6 months</h1>
                 <MyResponsiveBar/>
             </div>

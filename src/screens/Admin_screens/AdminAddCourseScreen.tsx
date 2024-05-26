@@ -1,15 +1,45 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, MenuItem, FormControlLabel, Checkbox, Typography } from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import PreviewModal from './AdminComponents/previewModal';
+
+interface CourseCard{
+  category?:string;
+  courseName?:string;
+  description?:string;
+  online?:boolean;
+  offline?:boolean;
+  sessions?:string[];
+  price?:number;
+  image?:File;
+  showActions?:boolean;
+}
+
 
 const AdminAddCourseScreen: React.FC = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
+  const [sessions,setSessions] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [finalCourseValues, setFinalCourseValues] = useState<CourseCard>({});
+  function closeModal() {
+      setIsOpen(false);
+  }
+
+  function openModal() {
+      setIsOpen(true);
+  }
 
   const handleFormSubmit = (values: any) => {
-    console.log(values);
+    if (sessions.length === 0) {
+      console.log("fill sessions");
+      
+    }
+    const formValues = { ...values, sessions: sessions };
+    console.log(formValues);
+    setFinalCourseValues(formValues);
+    openModal();
+
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,11 +53,23 @@ const AdminAddCourseScreen: React.FC = () => {
     }
   };
 
+  const handleAddSessions = () => {
+    const inputElement = document.getElementById('session') as HTMLInputElement;
+    if (inputElement) {
+      const newSession = inputElement.value;
+      console.log(newSession);
+      setSessions([...sessions,newSession]);
+      inputElement.value = "";
+    }
+  }
+
+  const handleDeleteSession = (index : number) => {
+    setSessions(sessions.filter((_, i) => i !== index));
+  }
+
   return (
-    <Box m="20px">
-      <Typography variant="h4" mb="20px" color="primary">
-        Create New Course
-      </Typography>
+    <div className="w-full h-full overflow-auto mx-auto p-6 bg-white rounded shadow-md lg:px-24">
+      <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">Create New Course</h1>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -42,151 +84,198 @@ const AdminAddCourseScreen: React.FC = () => {
           handleSubmit,
           setFieldValue,
         }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="20px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="outlined"
-                select
-                label="Category"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.category}
-                name="category"
-                error={!!touched.category && !!errors.category}
-                helperText={touched.category && errors.category}
-                sx={{ gridColumn: "span 2" }}
-              >
-                <MenuItem value="technology">Technology</MenuItem>
-                <MenuItem value="business">Business</MenuItem>
-                <MenuItem value="art">Art</MenuItem>
-                <MenuItem value="science">Science</MenuItem>
-              </TextField>
-              <TextField
-                fullWidth
-                variant="outlined"
-                type="text"
-                label="Course Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.courseName}
-                name="courseName"
-                error={!!touched.courseName && !!errors.courseName}
-                helperText={touched.courseName && errors.courseName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="outlined"
-                type="text"
-                label="Description"
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col">
+                <label htmlFor="category" className="font-semibold">Category</label>
+                <select
+                  id="category"
+                  name="category"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.category}
+                  className={`p-2 border rounded-md ${touched.category && errors.category ? 'border-red-500' : 'border-gray-300'}`}
+                >
+                  <option value="">Select Category</option>
+                  <option value="technology">Technology</option>
+                  <option value="business">Business</option>
+                  <option value="art">Art</option>
+                  <option value="science">Science</option>
+                </select>
+                {touched.category && errors.category && <div className="text-red-500 text-sm mt-1">{errors.category}</div>}
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="courseName" className="font-semibold">Course Name</label>
+                <input
+                  type="text"
+                  id="courseName"
+                  name="courseName"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.courseName}
+                  className={`p-2 border rounded-md ${touched.courseName && errors.courseName ? 'border-red-500' : 'border-gray-300'}`}
+                />
+                {touched.courseName && errors.courseName && <div className="text-red-500 text-sm mt-1">{errors.courseName}</div>}
+              </div>
+            </div>
+            <div className="flex flex-col ">
+              <label htmlFor="description" className="font-semibold">Description</label>
+              <textarea
+                id="description"
+                name="description"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.description}
-                name="description"
-                error={!!touched.description && !!errors.description}
-                helperText={touched.description && errors.description}
-                multiline
                 rows={4}
-                sx={{ gridColumn: "span 4" }}
+                className={`p-2 border rounded-md ${touched.description && errors.description ? 'border-red-500' : 'border-gray-300'}`}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
+              {touched.description && errors.description && <div className="text-red-500 text-sm mt-1">{errors.description}</div>}
+            </div>
+
+
+
+            <div className="grid grid-cols-1 gap-6">
+            <label htmlFor="courseAvailability" className="font-semibold">Course Availability :</label>
+              <div className="flex flex-row ">
+                  <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="online"
                     checked={values.online}
                     onChange={handleChange}
-                    name="online"
+                    className="mr-2 h-4 w-4 rounded-xl"
                   />
-                }
-                label="Online"
-                sx={{ gridColumn: "span 2" }}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
+                  <label className="font-semibold">Online</label>
+                </div>
+                <div className="flex items-center ml-4">
+                  <input
+                    type="checkbox"
+                    name="offline"
                     checked={values.offline}
                     onChange={handleChange}
-                    name="offline"
+                    className="mr-2 h-4 w-4"
                   />
+                  <label className="font-semibold">Offline</label>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="flex flex-col">
+            <label htmlFor="sessions" className="font-semibold">Sessions</label>
+
+              <div className='flex flex-row '>
+                <input
+                    type="text"
+                    id="session"
+                    name="session"
+                    onBlur={handleBlur}
+                    // onChange={handleChange}
+                    // value={values.courseName}
+
+
+                    // onChange={handleChange}
+                    // value={sessions}
+
+
+                    className={`p-2 border rounded-md border-gray-400 ${touched.sessions && errors.sessions ? 'border-red-500' : 'border-gray-300'}`}
+                  />
+                <button className="py-2 px-4 rounded-md border-2 border-blue-300 bg-blue-400 hover:bg-blue-200 ml-4" onClick={handleAddSessions} type='button'>
+                  ADD
+                </button>
+              </div>
+
+              <div className='flex flex-col'>
+                {
+                  sessions.map((session,index)=>(
+                    <div className='flex flex-row m-2' key={index}>
+                      <p className="mr-4">{session}</p>
+                      <button className="hover:bg-slate-200 rounded-full" onClick={() => {handleDeleteSession(index)}}><DeleteForeverIcon color='warning' fontSize='small'/></button>
+                    </div>
+                  ))
                 }
-                label="Offline"
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="outlined"
+              </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <div className="flex flex-col">
+              <label htmlFor="price" className="font-semibold">Price</label>
+              <input
                 type="text"
-                label="Price"
+                id="price"
+                name="price"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.price}
-                name="price"
-                error={!!touched.price && !!errors.price}
-                helperText={touched.price && errors.price}
-                sx={{ gridColumn: "span 4" }}
+                className={`p-2 border rounded-md ${touched.price && errors.price ? 'border-red-500' : 'border-gray-300'}`}
               />
-              <Button
-                variant="contained"
-                component="label"
-                sx={{ gridColumn: "span 4", mt: 2 }}
-              >
-                Upload Image
-                <input
-                  type="file"
-                  hidden
-                  accept="image/*"
-                  onChange={(event) => {
-                    handleImageChange(event);
-                    setFieldValue("image", event.currentTarget.files?.[0]);
-                  }}
-                />
-              </Button>
-              {imagePreview && (
-                <Box
-                  component="img"
-                  src={imagePreview as string}
-                  alt="Preview"
-                  sx={{ gridColumn: "span 4", maxHeight: 200, mt: 2, borderRadius: 2, border: '1px solid #ccc' }}
-                />
-              )}
-            </Box>
-            <Box display="flex" justifyContent="end" mt="30px">
-              <Button type="submit" color="primary" variant="contained">
-                Create New Course
-              </Button>
-            </Box>
+              {touched.price && errors.price && <div className="text-red-500 text-sm mt-1">{errors.price}</div>}
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="image" className="font-semibold ">Upload Image</label>
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                onChange={(event) => {
+                  handleImageChange(event);
+                  setFieldValue('image', event.currentTarget.files?.[0]);
+                }}
+                className="hidden"/>
+              <button
+                type="button"
+                onClick={() => document.getElementById('image')?.click()}
+                className="mt-2 px-2 py-2 w-28 bg-blue-500 text-white rounded">Choose File</button>
+
+              {touched.image && errors.image && <div className="text-red-500 text-sm mt-1">{errors.image}</div>}
+            </div>
+            {imagePreview && (
+              <div className="flex justify-start mt-4">
+                <img src={imagePreview as string} alt="Preview" className="max-h-52 rounded-md border border-gray-300" />
+              </div>
+            )}
+            <div className="flex justify-end">
+              <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-md shadow">Create New Course</button>
+            </div>
           </form>
         )}
       </Formik>
-    </Box>
+
+    <PreviewModal isOpen={isOpen} closeModal={closeModal} finalCourseValues={finalCourseValues}/>
+
+    </div>
   );
-}
+};
 
 const checkoutSchema = yup.object().shape({
-  category: yup.string().required("required"),
-  courseName: yup.string().required("required"),
-  description: yup.string().required("required"),
+  category: yup.string().required('required'),
+  courseName: yup.string().required('required'),
+  description: yup.string().required('required'),
   online: yup.boolean(),
   offline: yup.boolean(),
-  price: yup.number().required("required").positive("must be a positive number"),
-  image: yup.mixed().required("required"),
+  price: yup.number().required('required').positive('must be a positive number'),
+  image: yup.mixed().required('required'),
 });
 
 const initialValues = {
-  category: "",
-  courseName: "",
-  description: "",
+  category: '',
+  courseName: '',
+  description: '',
   online: false,
   offline: false,
-  price: "",
+  price: '',
   image: null,
+  sessions:[]
 };
 
 export default AdminAddCourseScreen;

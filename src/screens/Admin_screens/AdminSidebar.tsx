@@ -46,13 +46,13 @@ const AdminSidebar: React.FC = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/customers" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <Link to="/admin/students" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <FolderSharedRoundedIcon />
                                 <span className="flex-1 ml-3 whitespace-nowrap">Students data</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/customers" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <Link to="/admin/payments" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <CurrencyRupeeIcon />
                                 <span className="flex-1 ml-3 whitespace-nowrap">Payments</span>
                             </Link>
@@ -60,13 +60,13 @@ const AdminSidebar: React.FC = () => {
                     </ul>
                     <ul className="pt-5 mt-5 space-y-2 border-t border-gray-400 dark:border-gray-700">
                         <li>
-                            <Link to="/admin/settings" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                            <Link to="/admin/manage_questionPaper" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                                 <ContentPasteIcon />
                                 <span className="ml-3">Online Exams</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/employeemanagement" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                            <Link to="/admin/exam_reports" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                                 <DescriptionIcon />
                                 <span className="ml-3">Exam reports</span>
                             </Link>
@@ -78,7 +78,7 @@ const AdminSidebar: React.FC = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/reports" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                            <Link to="/admin/employee_management" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                                 <ManageAccountsRoundedIcon />
                                 <span className="ml-3">Employee Management</span>
                             </Link>

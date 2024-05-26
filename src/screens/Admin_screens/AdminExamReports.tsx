@@ -1,49 +1,47 @@
-import React from 'react';
+import React from 'react'
 import Navbar from './AdminComponents/Navbar';
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 
 interface Readonly {
     id:number;
-    uid: number;
+    uId: string;
     username: string;
-    age: number;
-    phone: string;
-    email: string;
-    courses: string;
-    PendingPayments: string;
-    date: string;
+    course: string;
+    Marks: string;
+    Total_marks:string;
+    date_of_exam: string;
 }
 
-const AdminShowStudents: React.FC = () => {
+const AdminExamReports:React.FC = () => {
     const dummyData: Readonly[] = [
         { 
             id: 1, 
-            uid: 1, 
-            username: "John Doe", 
-            age: 30, 
-            phone: "123-456-7890", 
-            email: "john@example.com", 
-            courses: "React, JavaScript", 
-            PendingPayments: "$50", 
-            date: "2024-05-22" 
+            uId: "bceq23r97", 
+            username: "John Doe",  
+            course: "Manager", 
+            Marks: "80", 
+            Total_marks:"100",
+            date_of_exam: "2024-05-22" 
         },
         { 
             id: 2, 
-            uid: 2, 
-            username: "Jane Smith", 
-            age: 25, 
-            phone: "987-654-3210", 
-            email: "jane@example.com", 
-            courses: "Python, SQL", 
-            PendingPayments: "$25", 
-            date: "2024-05-20" 
+            uId: "bceq23wef", 
+            username: "John smith",  
+            course: "Manager", 
+            Marks: "50", 
+            Total_marks:"100",
+            date_of_exam: "2024-05-22" 
         },
         // Add more objects as needed
     ];
     
     const columns: GridColDef[] = [
-        { field: "uid", headerName: "ID", flex: 1 },
+        { 
+            field: "uId",
+            headerName: "Student Id", 
+            flex: 1 
+        },
         {
             field: "username",
             headerName: "Name",
@@ -51,43 +49,30 @@ const AdminShowStudents: React.FC = () => {
             cellClassName: "name-column--cell",
         },
         {
-            field: "age",
-            headerName: "Age",
-            type: 'number',
-            headerAlign: "left",
-            align: "left",
+            field: "course",
+            headerName: "Course",
             flex: 1,
         },
         {
-            field: "phone",
-            headerName: "Phone Number",
+            field: "Marks",
+            headerName: "Marks",
             flex: 1,
         },
         {
-            field: "email",
-            headerName: "Email",
+            field: "Total_marks",
+            headerName: "Total Marks",
             flex: 1,
         },
         {
-            field: "courses",
-            headerName: "Courses",
-            flex: 1,
-        },
-        {
-            field: "PendingPayments",
-            headerName: "Pending Payments",
-            flex: 1,
-        },
-        {
-            field: "date",
-            headerName: "Date Joined",
+            field: "date_of_exam",
+            headerName: "Date Of Exam",
             flex: 1,
         },
     ];
 
     return (
         <div className="p-6 bg-slate-100 h-full overflow-auto dark:bg-slate-900">
-            <Navbar name='Students'/>
+            <Navbar name='Exam reports'/>
             <Box
                 m="40px 0 0 0"
                 height="80vh"
@@ -140,4 +125,4 @@ const AdminShowStudents: React.FC = () => {
     );
 }
 
-export default AdminShowStudents;
+export default AdminExamReports

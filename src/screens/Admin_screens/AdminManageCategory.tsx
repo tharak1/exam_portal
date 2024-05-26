@@ -5,8 +5,8 @@ import DummyAddCard from './AdminComponents/dummyAddCard';
 
 const AdminManageCategory:React.FC = () => {
   return (
-    <div className="p-6 bg-slate-100 h-full grid grid-cols-3 gap-3 dark:bg-gray-900">
-        <div className='col-span-3 row-span-1'>
+    <div className="p-6 bg-slate-100 h-full grid grid-cols-3 gap-3 dark:bg-gray-900 items-start">
+        <div className='col-span-3'>
             <Navbar name='Manage Categories'/>
         </div>
 

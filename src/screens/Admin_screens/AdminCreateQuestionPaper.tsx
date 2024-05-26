@@ -41,8 +41,8 @@ const CreateQuestionPaper: React.FC = () => {
   }, [questions]);
 
   return (
-    <div className="grid grid-cols-4 h-screen bg-slate-100 pb-5 overflow-auto">
-      <div className="col-span-3 w-full pl-9 pr-9 pt-4">
+    <div className="grid grid-cols-4 grid-rows-4 h-screen bg-slate-100 ">
+      <div className="col-span-3 w-full pl-9 pr-9 pt-4 row-span-4  overflow-auto">
         {questions.map((_question, index) => (
 
           <div key={index+7897152} className="mb-4">
@@ -71,7 +71,7 @@ const CreateQuestionPaper: React.FC = () => {
           print questions
         </button>
       </div>
-      <div className="col-span-1">
+      <div className="col-span-1 overflow-auto row-span-4">
         <SideBarForAdmin points={points} questions={questions}/>
       </div>
     </div>

@@ -48,14 +48,14 @@ function formatDate(date:Date) {
   return (
     <div className=" flex flex-row justify-between items-center">
     <div>
-        <h1>
+        <h1 className='dark:text-white'>
             {name}
         </h1>
-        <p>
+        <p className='dark:text-white'>
             {formatDate(new Date())}
         </p>
     </div>
-    <div className="flex flex-row ">
+    <div className="flex flex-row dark:text-white">
         
         <label className="inline-flex items-center cursor-pointer">
         <input type="checkbox" value="" className="sr-only peer" checked={theme === 'dark'} onChange={handleToggleTheme}/>
@@ -66,7 +66,7 @@ function formatDate(date:Date) {
 
         <IconButton aria-label="cart">
             <StyledBadge badgeContent={4} color="secondary">
-                <NotificationsNoneIcon fontSize='large' />
+                <NotificationsNoneIcon  fontSize='large' />
             </StyledBadge>
         </IconButton>
 
